@@ -1,0 +1,8 @@
+body {
+  background-color: #222;
+}
+
+div#canvas-container {
+  margin-top: 80px;
+  text-align: center;
+}
