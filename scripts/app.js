@@ -11,7 +11,7 @@ context.stroke();
 
 const player = new Player('#26afff', 260, 450, 80, 10);
 const computer = new Computer('#f22', 260, 40, 80, 10);
-const ball = new Ball(300, 250, 5, 0, Math.PI * 2, false);
+const ball = new Ball(300, 250, 4, 0, Math.PI * 2, false);
 
 function renderPaddle(paddle) {
   context.beginPath();
@@ -25,13 +25,13 @@ function Paddle(c, x, y, w, h) {
   this.y = y;
   this.width = w;
   this.height = h;
-  this.speed = 2;
+  this.speed = 5;
 }
 Paddle.prototype.move = function(key) {
   if (key === 'l' && this.x > 10) {
     context.clearRect(this.x, this.y, this.width, this.height);
     this.x = this.x - this.speed;
-  } else if (key === 'r' && this.x < 510) {
+  } else if (key === 'r' && this.x < 490) {
     context.clearRect(this.x, this.y, this.width, this.height);
     this.x = this.x + this.speed;
   }
@@ -48,18 +48,24 @@ function movePlayerPaddle(e) {
   }
 }
 
-function Arc(x, y, r, sa, ea, d) {
+function renderBall(ball) {
   context.beginPath();
-  context.fillStyle = '#ddd';
-  context.arc(x, y, r, sa, ea, d);
-  context.fill();
+  context.strokeStyle = '#ddd';
+  context.lineWidth = 7;
+  context.arc(ball.x, ball.y, ball.radius, ball.startAngle, ball.endAngle, ball.direction);
+  context.stroke();
 }
 
-function Ball(x, y, radius, startAngle, endAngle, direction) {
-  this.ball = new Arc(x, y, radius, startAngle, endAngle, direction);
+function Ball(x, y, r, sa, ea, d) {
+  this.x = x;
+  this.y = y;
+  this.radius = r;
+  this.startAngle = sa;
+  this.endAngle = ea;
+  this.direction = d;
 }
 Ball.prototype.render = function() {
-  return this.ball;
+  return renderBall(ball);
 }
 
 function Player(color, x, y, width, height) {
